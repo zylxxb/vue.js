@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>认识vue.js</title>
+  </head>
+  <body>
+    <div id="app">
+    <!-- input表单值随着tips改变 -->
+      <!-- <input type="text" name="tips" v-model="tips">
+      <h1>{{tips}}</h1> -->
+      <input type="text" name="tips" v-model="name">
+      <h1>{{age}}</h1>
+      <ul>
+        <li v-for = "book in books">{{book}}</li>
+      </ul>
+
+    </div>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    <script type="text/javascript">
+      var person = {
+        name: '张三',
+        age: 28,
+        books: ['乔丹传记','沉默的羔羊']
+      }
+      var app = new Vue({
+      // new Vue({
+        // el: document.querySelector('#app'),
+        el: '#app',
+        // 指向变量
+        data: person
+        // data: {
+        //   name: '李氏',
+        //   books: ['css','javascript'],
+        // age: 29
+        // }
+        // data: {
+        //   tips:'hello，world'
+        // }
+      })
+    </script>
+    <!-- 原生的数据绑定 -->
+    <!-- <script type="text/javascript">
+      var tips = 'hello,world'
+      var h1 = document.querySelector('#app h1')
+      h1.innerHTML = tips
+      var input = document.querySelector('#app input')
+      input.addEventListener('change',function(event){
+        h1.innerHTML = this.value
+      })
+    </script> -->
+  </body>
+</html>
