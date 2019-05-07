@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>vue.js--理解vue.js的生命周期</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1>{{name}}</h1>
+      <h1>{{url}}</h1>
+      <p v-text="name"></p>
+      <h1 v-text='url'></h1>
+      <h1 v-html='url'></h1>
+      <h1>{{age>20? '青年':'少年'}}</h1>
+      <h1>{{'姓名:' + name + ' 年龄:' + age}}</h1>
+      <p>{{memony.split(',').reverse().join('.')}}</p>
+    </div>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    <script type="text/javascript">
+      var app  = new Vue({
+        el: '#app',
+        data: {
+          name: '张三',
+          url: '<a href="http://www.baidu.com">百度</a>',
+          age: 28,
+          memony: '123,456'
+        },
+        created:function(){
+          debugger
+        },
+        mounted:function(){
+
+        }
+      })
+    </script>
+
+    <!-- <script type="text/javascript">
+      var app = new Vue({
+        el: '#app',
+        data: {
+          name: '张三'
+        },
+        beforeCreate:function(){
+          console.log('开始建立实例之前')
+          console.log(this.name)
+          // debugger
+        },
+        created:function(){
+          console.log('实例建立完成')
+          console.log(this.name)
+          console.log(this.$el)
+          // debugger
+        },
+        beforeMount:function(){
+          console.log('实例挂载到dom之前')
+          console.log(this.name)
+          console.log(this.$el)
+          // debugger
+        },
+        mounted:function(){
+          console.log('挂载好之后')
+          console.log(this.name)
+          console.log(this.$el)
+          // debugger
+        },
+        beforeDestroy:function(){
+          console.log('销毁vue.js实例时调用')
+          console.log(this.name)
+          console.log(this.$el)
+          debugger
+        },
+        destroyed:function(){
+          console.log('销毁vue.js实例后调用')
+          console.log(this.name)
+          console.log(this.$el)
+        }
+      })
+      setTimeout(function(){
+        app.$destroy()
+      },5000)
+    </script> -->
+  </body>
+</html>
