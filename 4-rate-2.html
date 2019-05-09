@@ -60,8 +60,8 @@
         },
         watch: {
           rmb: function(newValue, oldValue){
-            if (newValue > 10000000000000) {
-              // alert('输入数据不能超过100000000000')
+            if (newValue > 100000000) {
+              // alert('输入数据不能超过100000000')
               this.rmb = 0
               this.tips = '你输入的数据不能超过10000'
             } else {
