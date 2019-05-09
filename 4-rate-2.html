@@ -9,7 +9,7 @@
         <h2>货币转换</h2>
         <p>人民币转美元，今日汇率：{{rate}}</p>
         <input type="number" v-model="rmb">
-        <span>{{rmb | tran | join('￥')}}</span>
+        <span>{{rmb | tran | toThousands |join('￥')}}</span>
         <br>
         <input type="number" v-model="dollar" disabled>
         <span>{{dollar | tran | join('$')}}</span>
@@ -27,8 +27,9 @@
         computed: {
           dollar: function(){
             return (this.rmb * this.rate).toFixed(2)
-          }
+          },
         },
+
         filters: {
           tran: function(value){
             if(value >= 0){
@@ -40,12 +41,27 @@
           },
           join: function(value, params){
             return params + value
+          },
+          toThousands: function(value){
+            console.log('cut');
+            var value = (value || 0).toString();
+            var temp = value.length % 3
+            console.log(value);
+            switch (temp) {
+              case 1:
+              value = '00' + value
+              break;
+              case 2:
+              value = '0' + value
+              break;
+            }
+            return value.match(/\d{3}/g).join(',').replace(/^0+/, '')
           }
         },
         watch: {
           rmb: function(newValue, oldValue){
-            if (newValue > 10000) {
-              // alert('输入数据不能超过10000')
+            if (newValue > 10000000000000) {
+              // alert('输入数据不能超过100000000000')
               this.rmb = 0
               this.tips = '你输入的数据不能超过10000'
             } else {
