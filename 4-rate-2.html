@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>汇率转化</title>
+  </head>
+  <body>
+    <div id="app">
+        <h2>货币转换</h2>
+        <p>人民币转美元，今日汇率：{{rate}}</p>
+        <input type="number" v-model="rmb">
+        <span>{{rmb | tran | join('￥')}}</span>
+        <br>
+        <input type="number" v-model="dollar" disabled>
+        <span>{{dollar | tran | join('$')}}</span>
+        <p>{{tips}}</p>
+    </div>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    <script type="text/javascript">
+      var app = new Vue({
+        el: '#app',
+        data: {
+          rate: 0.1476,
+          rmb: 0,
+          tips: ''
+        },
+        computed: {
+          dollar: function(){
+            return (this.rmb * this.rate).toFixed(2)
+          }
+        },
+        filters: {
+          tran: function(value){
+            if(value >= 0){
+              return value
+            } else {
+              alert('数据不能为负')
+              app.rmb = 0
+            }
+          },
+          join: function(value, params){
+            return params + value
+          }
+        },
+        watch: {
+          rmb: function(newValue, oldValue){
+            if (newValue > 10000) {
+              // alert('输入数据不能超过10000')
+              this.rmb = 0
+              this.tips = '你输入的数据不能超过10000'
+            } else {
+              this.tips = ''
+            }
+          }
+        }
+      })
+    </script>
+  </body>
+</html>
