@@ -75,12 +75,18 @@
           job: '',
           arr: []
         },
+        created: function(){
+          this.getData()
+        },
         methods: {
           removeTab: function(){
             this.arr.pop()
           },
           deleteTab: function(index){
-            this.arr.splice(index, 1)
+            if (window.confirm('是否确定删除？')) {
+              this.arr.splice(index, 1)
+              this.saveData()
+            }
           },
           addTab:function(tips, e){
             e.preventDefault()
@@ -105,7 +111,7 @@
             this.job = ''
           },
           getData: function(){
-            var arr = localStorage.getItem('arr')
+            var arr = window.localStorage.getItem('arr')
             if (arr !== null) {
               this.arr = JSON.parse(arr)
             }
