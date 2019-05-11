@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>结合bootstrap和web storage来改进表单</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="app" style="margin-top:50px">
+      <div class="container">
+        <form class="form-horizontal" @submit="addTab('hello,world',$event)">
+          <div class="form-group">
+            <label for="name" class="col-md-4 control-label">姓名</label>
+            <div class="col-md-4">
+              <input type="text" class="form-control" id="name" v-model="name" placeholder="请输入姓名">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="age" class="col-md-4 control-label">年龄</label>
+            <div class="col-md-4">
+              <input type="text" class="form-control" id="age" v-model="age" placeholder="请输入姓名">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="job" class="col-md-4 control-label">工作</label>
+            <div class="col-md-4">
+              <input type="text" class="form-control" id="job" v-model="job" placeholder="请输入姓名">
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="submit" class="btn btn-success col-md-offset-4 col-md-1" value="增加"></input>
+            <button class="btn btn-default col-md-offset-1 col-md-2" v-if="arr.length > 0" v- @click="removeTab">删除最后保留信息</button>
+          </div>
+        </form>
+        </div>
+        <div class="row">
+        <div class="col-md-offset-3 col-md-6" style="margin-top:30px">
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>序号</th>
+                <th>姓名</th>
+                <th>年龄</th>
+                <th>工作</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <template  v-if="arr.length > 0">
+                <tr v-for="(item,index) in arr">
+                  <th>{{index + 1}}</th>
+                  <th>{{item.name}}</th>
+                  <th>{{item.age}}</th>
+                  <th>{{item.job}}</th>
+                  <th><a href="#" @click="deleteTab(index)">删除</a></th>
+                </tr>
+              </template>
+              <template v-else>
+                <tr>
+                  <td colspan = "5" style="text-align:center">目前表单尚未输入内容, 请继续操作......</td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    <script type="text/javascript">
+      var app = new Vue({
+        el: '#app',
+        data: {
+          name: '',
+          age: null,
+          job: '',
+          arr: []
+        },
+        methods: {
+          removeTab: function(){
+            this.arr.pop()
+          },
+          deleteTab: function(index){
+            this.arr.splice(index, 1)
+          },
+          addTab:function(tips, e){
+            e.preventDefault()
+            var obj = {
+              name: this.name,
+              age: this.age,
+              job: this.job
+            }
+            if((obj.name.length > 0)&&(obj.age.length > 0)&&(obj.job.length > 0)){
+              this.arr.push(obj)
+            }
+            this.saveData()
+            this.clearData()
+          },
+          saveData: function(){
+            var arr = JSON.stringify(this.arr)
+            localStorage.setItem('arr',arr)
+          },
+          clearData: function(){
+            this.name = ''
+            this.age = null
+            this.job = ''
+          },
+          getData: function(){
+            var arr = localStorage.getItem('arr')
+            if (arr !== null) {
+              this.arr = JSON.parse(arr)
+            }
+          }
+        }
+      })
+    </script>
+  </body>
+</html>

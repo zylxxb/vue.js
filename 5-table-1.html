@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>表格信息添加vue.js</title>
+  </head>
+  <body>
+    <div id="app">
+      <div>
+        <input type="text" v-model="name" placeholder="请输入姓名">
+        <br>
+        <input type="text" v-model="age" placeholder="请输入年龄">
+        <br>
+        <input type="text" v-model="job" placeholder="请输入工作">
+        <br>
+        <button @click="addTab">增加</button>
+        <button v-if="arr.length > 0" @click="removeTab">删除最后保留信息</button>
+      </div>
+      <table border="1">
+        <thead>
+          <tr>
+            <th>序号</th>
+            <th>姓名</th>
+            <th>年龄</th>
+            <th>工作</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <template  v-if="arr.length > 0">
+            <tr v-for="(item,index) in arr">
+              <th>{{index + 1}}</th>
+              <th>{{item.name}}</th>
+              <th>{{item.age}}</th>
+              <th>{{item.job}}</th>
+              <th><a href="#" @click="deleteTab(index)">删除</a></th>
+            </tr>
+          </template>
+          <template v-else>
+            <tr>
+              <td  colspan = "5">无内容</td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+    </div>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    <script type="text/javascript">
+      var app = new Vue({
+        el: '#app',
+        data: {
+          name: '',
+          age: null,
+          job: '',
+          arr: []
+        },
+        methods: {
+          removeTab: function(){
+            this.arr.pop()
+          },
+          deleteTab: function(index){
+            this.arr.splice(index, 1)
+          },
+          addTab:function(){
+            var obj = {
+              name: this.name,
+              age: this.age,
+              job: this.job
+            }
+            if((obj.name.length > 0)&&(obj.age.length > 0)&&(obj.job.length > 0)){
+              this.arr.push(obj)
+            }
+            this.clearData()
+          },
+          clearData: function(){
+            this.name = ''
+            this.age = null
+            this.job = ''
+          }
+        }
+      })
+    </script>
+  </body>
+</html>

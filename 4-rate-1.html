@@ -18,11 +18,11 @@
     <script type="text/javascript">
       var app = new Vue({
         el: '#app',
-        data: {
+        data: {  // 以数据为中心， 数据改变， 界面也就随着改变
           rate: 0.1476,
           rmb: 0
         },
-        computed: {
+        computed: {   // 计算属性， 结果要返回， 给vue.js进行使用
           dollar: function(){
             return (this.rmb * this.rate).toFixed(2)
           }
