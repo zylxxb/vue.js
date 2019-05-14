@@ -8,30 +8,30 @@
   <body>
     <div id="app" style="margin-top:50px">
       <div class="container">
-        <form class="form-horizontal" @submit="addTab('hello,world',$event)">
+         <!-- 注意此处与form标签提交方式的区别 -->
+        <div class="form-horizontal">
           <div class="form-group">
             <label for="name" class="col-md-4 control-label">姓名</label>
             <div class="col-md-4">
-              <input type="text" class="form-control" id="name" v-model="name" placeholder="请输入姓名">
+              <input type="text" class="form-control" id="name" v-model="name" ref="name" @keyup.enter.prevent.stop="go('age')" placeholder="请输入姓名">
             </div>
           </div>
           <div class="form-group">
             <label for="age" class="col-md-4 control-label">年龄</label>
             <div class="col-md-4">
-              <input type="number" class="form-control" id="age" v-model="age" placeholder="请输入年龄">
+              <input type="number" class="form-control" id="age" v-model.number="age" ref="age" @keyup.enter="go('job')" placeholder="请输入年龄">
             </div>
           </div>
           <div class="form-group">
             <label for="job" class="col-md-4 control-label">工作</label>
             <div class="col-md-4">
-              <input type="text" class="form-control" id="job" v-model="job" placeholder="请输入工作">
+              <input type="text" class="form-control" id="job" v-model="job" ref="job" @keyup.enter="go('name')" placeholder="请输入工作">
             </div>
           </div>
-          <div class="form-group">
-            <input type="submit" class="btn btn-success col-md-offset-4 col-md-1" value="增加"></input>
-            <button class="btn btn-default col-md-offset-1 col-md-2" v-if="arr.length > 0" @click="removeTab">删除最后保留信息</button>
-          </div>
-        </form>
+             <!-- 注意input和button的书写方式 -->
+          <button type="submit" class="btn col-md-offset-4 col-md-1" :class="{'btn-success' : isTrue}" v-html="title" @click.prevent="addTab"></button>
+          <button type="button" class="btn btn-default col-md-offset-1 col-md-2" v-if="arr.length > 0" @click="removeTab">删除最后保留信息</button>
+        </div>
         </div>
         <div class="row">
         <div class="col-md-offset-3 col-md-6" style="margin-top:30px">
@@ -73,12 +73,27 @@
           name: '',
           age: null,
           job: '',
-          arr: []
+          arr: [],
+          title: '注册'
         },
         created: function(){
           this.getData()
         },
+        computed:{
+          isTrue: function(){
+            if ((this.name === '')||(this.age === null)||(this.job === '')) {
+              return false
+              this.title = '注册'
+            } else {
+              this.title = '确定'
+              return true
+            }
+          }
+        },
         methods: {
+          go: function(dom){
+            this.$refs[dom].focus()
+          },
           removeTab: function(){
             if (window.confirm('是否删除最后一行？')) {
             this.arr.pop()
@@ -90,18 +105,19 @@
               this.saveData()
             }
           },
-          addTab:function(tips, e){
-            e.preventDefault()
+          addTab:function(){
             var obj = {
               name: this.name,
               age: this.age,
               job: this.job
             }
-            if((obj.name.length > 0)&&(obj.age.length > 0)&&(obj.job.length > 0)){
+            if((obj.name === '')||(obj.age === null)||(obj.job === '')){
+              alert('请核实你信息是否填写完整')
+            } else{
               this.arr.push(obj)
+              this.saveData()
+              this.clearData()
             }
-            this.saveData()
-            this.clearData()
           },
           saveData: function(){
             var arr = JSON.stringify(this.arr)
