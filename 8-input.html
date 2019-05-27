@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>表单常规处理</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <div style="background-color:#ddd;height:668px">
+      <div class="container col-sm-4 col-sm-offset-4" style="margin-top:50px" id="app">
+        <form class="form form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="name">姓名</label>
+            <div class="col-sm-10">
+              <input type="text" id="name" class="form-control" v-model="student.name">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="age">年龄</label>
+            <div class="col-sm-10">
+              <input type="number" id="age" class="form-control" v-model.number="student.age">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">性别</label>
+            <div class="col-sm-10">
+              <label class="radio-inline" for="male">
+                <input type="radio" id="male" v-model="student.sex" value="男"> 男
+              </label>
+              <label class="radio-inline" for="female">
+                <input type="radio" id="female" v-model="student.sex" value="女"> 女
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="mz">民族</label>
+            <div class="col-sm-10">
+              <select class="form-control" id="mz" v-model="student.mz">
+                <option v-for='item in mzs' :value="item">{{item}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="fav">爱好</label>
+            <div class="col-sm-10">
+              <select class="form-control" id="fav" v-model="student.fav" multiple>
+                <!-- <option value="篮球">篮球</option>
+                <option value="唱歌">唱歌</option>
+                <option value="足球">足球</option>
+                <option value="爬山">爬山</option>
+                <option value="高尔夫">高尔夫</option> -->
+                <option v-for='(item,index) in favs' :value="item" :key="index">{{item}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">技能</label>
+            <div class="col-sm-10">
+              <template v-for="(item,index) in skills">
+                <label :for="item" class="radio-inline">
+                  <!-- for 和 ：id 绑定表单对应指向 -->
+                  <input type="checkbox" :id="item" :value="item" :key="index" v-model="student.skill"> {{item}}
+                </label>
+              </template>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">专业</label>
+            <div class="col-sm-10">
+              <template v-for="(item,index) in pros">
+                <label :for="item" class="radio-inline">
+                  <input type="radio" :id="item" :value="item" :key="index" v-model="student.pro"> {{item}}
+                </label>
+              </template>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="intro">自我介绍</label>
+            <div class="col-sm-10">
+              <textarea id="intro" rows="8" cols="50" v-model="student.intro"></textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    </div>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    <script type="text/javascript">
+      var app = new Vue({
+        el: '#app',
+        data: {
+          student:{
+            name: '',
+            age: null,
+            sex: '',
+            pro: '',
+            mz: '',
+            intro: '',
+            fav: [],    //fav: '' 会被纠正为数组(下拉列表可自动处理，复选框必须定义为空数组)
+            skill: [] //
+          },
+          pros: ['数字媒体', '软件工程', '网络工程'],
+          mzs: ['白', '汉', '彝', '傣'],
+          favs: ['电脑', '吉他', '游泳', '蹦极'],
+          skills: ['ps', 'ae', 'web', 'pyhon' ]
+        }
+      })
+    </script>
+  </body>
+</html>

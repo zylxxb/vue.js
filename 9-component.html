@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>认识组件</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container">
+      <div id="app1">
+        <!-- <my-div :info="str"></my-div>
+        <my-div :info="test"></my-div>
+        <my-div :info="true"></my-div> -->
+        <my-div :is-show="true"></my-div>
+        <my-div :is-show="false"></my-div>
+        <my-div :is-show="0" :info="test"></my-div>
+        <my-div :info="str"></my-div>
+        <my-div1></my-div1>
+      </div>
+      <br>
+      <!-- <div id="app2">
+        <my-div></my-div>
+        <my-div></my-div>
+        <my-div></my-div>
+        <my-div1></my-div1>
+           </div> -->   
+    </div>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    <script type="text/javascript">
+      Vue.component("my-div",{
+        // template: "<div>{{info}}</div>",
+        template: "<div>\
+        <h1 v-if='isShow'>显示标题</h1>\
+        <p v-else>显示内容{{info}}</p>\
+        </div>",
+        data: function() {   // 和new Vue({})一样可以使用监听，vue生命周期等方法，data传入函数，方便复用
+          return {
+            name: '我是自定义组件'
+          }
+        },
+        // props: ["info","isShow"]  //props可以用数组或者对象，建议对象，可以设置传入数据的type等
+        props: {
+          info: {
+            type: String,
+            required: true,
+            default: '组件测试'
+          },
+          isShow: {
+            type: Boolean,
+            required: true,
+            default: false
+          }
+        },
+        filters: {
+
+        },
+        computed: {
+
+        },
+        watch: {
+
+        },
+        methods: {
+
+        },
+        created: {
+
+        }
+      })
+      var component1 = {
+        template: "<div>我是局部组件</div>"
+      }
+      var app1 = new Vue({
+        el:'#app1',
+        data: {
+          str: 'hello,world',
+          test: '父子组件数据传送'
+        },
+        components: {
+          'my-div1': component1
+        }
+      })
+      // var app2 = new Vue({
+      //   el:'#app2',
+      //   data: {
+      //   },
+      //   components: {
+      //   }
+      // })
+    </script>
+  </body>
+</html>
