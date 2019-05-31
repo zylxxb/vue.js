@@ -25,6 +25,8 @@ export default new Router({   // 导出路由对象
   routes: [
     {
       path: '/',
+      // redirect: '/about',
+      // alias: '/index',
       name: 'home',
       component: Home,
       meta: {

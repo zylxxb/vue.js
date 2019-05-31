@@ -13,9 +13,6 @@ export default {
   name: 'home',
   components: {
     HelloWorld
-  },
-  created(){
-    window.document.title = this.$route.meta.title
   }
 }
 </script>

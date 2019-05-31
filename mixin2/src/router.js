@@ -25,17 +25,21 @@ export default new Router({   // 导出路由对象
   routes: [
     {
       path: '/',
+      // redirect: '/about',
+      // alias: '/index',
       name: 'home',
       component: Home,
       meta: {
-        title: '首页'
+        title: '首页',
+        auth: false
       }
     },
     {
       path: '/about',
       name: 'about',
       meta: {
-        title: '关于'
+        title: '关于',
+        auth: false
       },
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
@@ -57,6 +61,9 @@ export default new Router({   // 导出路由对象
     {
       path: '/user/:id',
       name: 'user',
+      meta: {
+        auth: true
+      },
       component: () => import('./views/User.vue'),
       beforeEnter(to, from, next){
         console.log('进入user页面之前)')

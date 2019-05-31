@@ -8,15 +8,14 @@
 <script>
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue'
+import Title from '@/components/title.js'
 
 export default {
   name: 'home',
   components: {
     HelloWorld
   },
-  created(){
-    window.document.title = this.$route.meta.title
-  }
+  mixins: [Title]
 }
 </script>
 
