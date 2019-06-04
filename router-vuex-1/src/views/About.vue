@@ -8,16 +8,14 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
+import {mapGetters} from 'vuex'
 
 export default {
   name: 'about',
   computed:{
-    name() {
-      return this.$store.state.name
-    },
-    reverseName(){
-      return this.$store.getters.reverseName
-    }
+      ...mapState(['name']),
+      ...mapGetters(['reverseName'])
   },
   data(){
     return {
