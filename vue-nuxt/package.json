@@ -1,0 +1,25 @@
+{
+  "name": "vue-nuxt",
+  "version": "1.0.0",
+  "description": "My spectacular Nuxt.js project",
+  "author": "zylxxb",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.3.6",
+    "axios": "^0.19.0",
+    "bootstrap": "^4.3.1",
+    "bootstrap-vue": "^2.0.0-rc.23",
+    "element-ui": "^2.4.11",
+    "nuxt": "^2.0.0",
+    "save": "^2.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
+  }
+}
